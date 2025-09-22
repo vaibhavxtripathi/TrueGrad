@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion';
 import { Building2, Plus, Trash2, AlertCircle } from 'lucide-react'
 import { useState } from 'react'
 
@@ -7,7 +7,7 @@ const BlacklistTable = () => {
     {
       id: 1,
       name: 'Fake University',
-      location: 'Unknown',
+      location: 'Unknown', 
       addedDate: '2024-01-10',
       reason: 'Multiple fake certificates detected',
       status: 'Active'
@@ -86,7 +86,7 @@ const BlacklistTable = () => {
           <span>Add Institution</span>
         </button>
       </div>
-
+      <AnimatePresence>
       {showAddForm && (
         <motion.form
           initial={{ opacity: 0, height: 0 }}
@@ -149,6 +149,7 @@ const BlacklistTable = () => {
           </div>
         </motion.form>
       )}
+      </AnimatePresence>
 
       <div className="overflow-x-auto">
         <table className="w-full">
