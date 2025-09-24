@@ -4,9 +4,11 @@ import Navbar from './components/Navbar'
 import VerifierUpload from './pages/VerifierUpload'
 import VerifierResult from './pages/VerifierResult'
 import AdminDashboard from './pages/AdminDashboard'
+import BulkVerifier from './pages/BulkVerifier'
 
 function App() {
   return (
+
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       
@@ -44,6 +46,21 @@ function App() {
             } 
           />
           
+             <Route 
+            path="/bulk-verifier" 
+            element={
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <BulkVerifier />
+              </motion.div>
+            } 
+          />
+
+
           {/* Admin Route */}
           <Route 
             path="/admin" 
