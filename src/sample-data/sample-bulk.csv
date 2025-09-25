@@ -1,0 +1,14 @@
+applicant_name,cert_id,institution,program,year,certificate_file
+Aditi,UT-2024-001234,University of Technology,B.Tech CS,2024,cert1.jpg
+Rahul,SC-2023-009912,State College,B.Sc Physics,2023,cert2.png
+Priya,MU-2022-000111,Metro University,MBA,2022,cert3.jpg
+Arjun,CI-2024-123456,City Institute,BA Economics,2024,cert4.png
+Neha,RC-2021-654321,Regional College,M.Tech AI,2021,cert5.jpg
+Karan,CC-2020-777333,Community College,BBA,2020,cert6.png
+Zoya,UT-2024-002468,University of Technology,B.Tech CS,2024,cert7.jpg
+Ishaan,SC-2023-001357,State College,B.Sc Physics,2023,cert8.png
+Simran,MU-2022-009999,Metro University,MBA,2022,cert9.jpg
+Dev,CI-2024-000222,City Institute,BA Economics,2024,cert10.png
+Meera,RC-2021-003333,Regional College,M.Tech AI,2021,cert11.jpg
+Anil,CC-2020-004444,Community College,BBA,2020,cert12.png
+

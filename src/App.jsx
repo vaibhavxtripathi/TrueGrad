@@ -4,6 +4,14 @@ import Navbar from './components/Navbar'
 import VerifierUpload from './pages/VerifierUpload'
 import VerifierResult from './pages/VerifierResult'
 import AdminDashboard from './pages/AdminDashboard'
+import ProtectedRoute from './components/ProtectedRoute'
+import Landing from './pages/Landing'
+import Login from './pages/Login'
+import BulkUploader from './pages/BulkUploader'
+import Employer from './pages/Employer'
+import Admissions from './pages/Admissions'
+import Scholarships from './pages/Scholarships'
+import Government from './pages/Government'
 
 function App() {
   return (
@@ -12,8 +20,9 @@ function App() {
       
       <AnimatePresence mode="wait">
         <Routes>
-          {/* Redirect root to verifier */}
-          <Route path="/" element={<Navigate to="/verifier" replace />} />
+          {/* Landing */}
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
           
           {/* Verifier Routes */}
           <Route 
@@ -44,23 +53,34 @@ function App() {
             } 
           />
           
-          {/* Admin Route */}
+          {/* Protected Routes */}
           <Route 
-            path="/admin" 
+            path="/admin"
             element={
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <AdminDashboard />
-              </motion.div>
-            } 
+              <ProtectedRoute roles={["admin"]}>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                  <AdminDashboard />
+                </motion.div>
+              </ProtectedRoute>
+            }
           />
+          <Route 
+            path="/bulk-upload" 
+            element={
+              <ProtectedRoute roles={["employer","admissions","scholarships","government","admin"]}>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                  <BulkUploader />
+                </motion.div>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/employer" element={<ProtectedRoute roles={["employer","admin"]}><Employer /></ProtectedRoute>} />
+          <Route path="/admissions" element={<ProtectedRoute roles={["admissions","admin"]}><Admissions /></ProtectedRoute>} />
+          <Route path="/scholarships" element={<ProtectedRoute roles={["scholarships","admin"]}><Scholarships /></ProtectedRoute>} />
+          <Route path="/government" element={<ProtectedRoute roles={["government","admin"]}><Government /></ProtectedRoute>} />
           
-          {/* Catch all route - redirect to verifier */}
-          <Route path="*" element={<Navigate to="/verifier" replace />} />
+          {/* Catch all route - redirect to landing */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
     </div>

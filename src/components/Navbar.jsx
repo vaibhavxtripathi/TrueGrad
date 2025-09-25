@@ -1,13 +1,23 @@
 import { motion } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom'
-import { GraduationCap, Shield, Settings } from 'lucide-react'
+import { GraduationCap, Shield, Settings, LogIn, LogOut, Building2, UserSquare2, Landmark, School } from 'lucide-react'
+import { useAuth } from '../context/AuthContext'
 
 const Navbar = () => {
   const location = useLocation()
+  const { role, isAuthenticated, logout } = useAuth()
 
   const navItems = [
+    { path: '/', label: 'Home', icon: GraduationCap },
     { path: '/verifier', label: 'Verifier', icon: Shield },
-    { path: '/admin', label: 'Admin', icon: Settings }
+    ...(isAuthenticated ? [
+      { path: '/bulk-upload', label: 'Bulk', icon: Building2 },
+      ...(role === 'employer' || role === 'admin' ? [{ path: '/employer', label: 'Employer', icon: UserSquare2 }] : []),
+      ...(role === 'admissions' || role === 'admin' ? [{ path: '/admissions', label: 'Admissions', icon: School }] : []),
+      ...(role === 'scholarships' || role === 'admin' ? [{ path: '/scholarships', label: 'Scholarships', icon: Landmark }] : []),
+      ...(role === 'government' || role === 'admin' ? [{ path: '/government', label: 'Government', icon: Landmark }] : []),
+      ...(role === 'admin' ? [{ path: '/admin', label: 'Admin', icon: Settings }] : []),
+    ] : [])
   ]
 
   return (
@@ -36,7 +46,7 @@ const Navbar = () => {
           </Link>
 
           {/* Navigation Links */}
-          <div className="flex space-x-8">
+          <div className="flex space-x-2 sm:space-x-4">
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = location.pathname.startsWith(item.path)
@@ -56,6 +66,17 @@ const Navbar = () => {
                 </Link>
               )
             })}
+            {!isAuthenticated ? (
+              <Link to="/login" className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:text-primary-600 hover:bg-gray-50">
+                <LogIn className="h-4 w-4" />
+                <span className="font-medium">Login</span>
+              </Link>
+            ) : (
+              <button onClick={logout} className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-600 hover:text-error-600 hover:bg-gray-50">
+                <LogOut className="h-4 w-4" />
+                <span className="font-medium">Logout</span>
+              </button>
+            )}
           </div>
         </div>
       </div>

@@ -1,0 +1,16 @@
+[
+  { "id": 1, "date": "2024-12-01", "applicant_name": "Aditi", "institution": "University of Technology", "program": "B.Tech CS", "status": "valid", "file_checksum": "chk_123" },
+  { "id": 2, "date": "2024-12-02", "applicant_name": "Rahul", "institution": "State College", "program": "B.Sc Physics", "status": "fake", "file_checksum": "chk_321" },
+  { "id": 3, "date": "2024-12-03", "applicant_name": "Priya", "institution": "Metro University", "program": "MBA", "status": "valid", "file_checksum": "chk_222" },
+  { "id": 4, "date": "2024-12-03", "applicant_name": "Arjun", "institution": "City Institute", "program": "BA Economics", "status": "fake", "file_checksum": "chk_444" },
+  { "id": 5, "date": "2024-12-04", "applicant_name": "Neha", "institution": "Regional College", "program": "M.Tech AI", "status": "valid", "file_checksum": "chk_555" },
+  { "id": 6, "date": "2024-12-04", "applicant_name": "Karan", "institution": "Community College", "program": "BBA", "status": "valid", "file_checksum": "chk_666" },
+  { "id": 7, "date": "2024-12-05", "applicant_name": "Zoya", "institution": "University of Technology", "program": "B.Tech CS", "status": "valid", "file_checksum": "chk_777" },
+  { "id": 8, "date": "2024-12-05", "applicant_name": "Ishaan", "institution": "State College", "program": "B.Sc Physics", "status": "fake", "file_checksum": "chk_888" },
+  { "id": 9, "date": "2024-12-06", "applicant_name": "Simran", "institution": "Metro University", "program": "MBA", "status": "valid", "file_checksum": "chk_999" },
+  { "id": 10, "date": "2024-12-06", "applicant_name": "Dev", "institution": "City Institute", "program": "BA Economics", "status": "valid", "file_checksum": "chk_111" },
+  { "id": 11, "date": "2024-12-07", "applicant_name": "Meera", "institution": "Regional College", "program": "M.Tech AI", "status": "fake", "file_checksum": "chk_222" },
+  { "id": 12, "date": "2024-12-07", "applicant_name": "Anil", "institution": "Community College", "program": "BBA", "status": "valid", "file_checksum": "chk_333" }
+]
+
+

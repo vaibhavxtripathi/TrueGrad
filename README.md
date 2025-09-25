@@ -17,6 +17,22 @@ A React + Tailwind CSS + Framer Motion web application for verifying academic ce
 3. **Open your browser:**
    Navigate to `http://localhost:3000`
 
+### Mock Login (Roles)
+- Go to `/login`
+- Enter any username/password (mock)
+- Select a role: Admin, Employer, Admissions, Scholarships, Government
+- On login, you'll be redirected to the corresponding dashboard
+
+### Mock Data Location
+- All demo data is stored in `src/sample-data/`:
+  - `regionPatterns.json` — certificate ID regex, institutions, allowed courses, QR/hash formats
+  - `sample-verifications.json` — ~12 mixed verification records
+  - `sample-bulk.csv` — sample CSV for the Bulk Uploader
+
+### Disclaimer
+- This is a frontend-only demo. No real PII is collected or sent to a backend.
+- All verification logic and datasets are mocked and run in the browser.
+
 ## 📁 Project Structure
 
 ```

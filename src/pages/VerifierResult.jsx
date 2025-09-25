@@ -6,8 +6,10 @@ const VerifierResult = () => {
   const location = useLocation()
   const navigate = useNavigate()
   
-  const { isValid, ocrDetails, file } = location.state || {
+  const { isValid, ocrDetails, file, score, flags } = location.state || {
     isValid: true,
+    score: 95,
+    flags: [],
     ocrDetails: {
       studentName: 'John Doe',
       institution: 'University of Technology',
@@ -25,7 +27,7 @@ const VerifierResult = () => {
     qrCode: isValid ? 'Verified' : 'Failed',
     databaseCheck: isValid ? 'Confirmed' : 'Not Found',
     institutionVerification: isValid ? 'Authentic' : 'Suspicious',
-    overallScore: isValid ? 95 : 23
+    overallScore: typeof score === 'number' ? score : (isValid ? 95 : 23)
   }
 
   const reasons = isValid 
@@ -187,7 +189,7 @@ const VerifierResult = () => {
           </motion.div>
         </div>
 
-        {/* Reasons */}
+        {/* Reasons / Flags */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -200,7 +202,7 @@ const VerifierResult = () => {
           </h3>
 
           <div className="space-y-3">
-            {reasons.map((reason, index) => (
+            {(flags && flags.length > 0 ? flags : reasons).map((reason, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
@@ -217,11 +219,7 @@ const VerifierResult = () => {
                 ) : (
                   <XCircle className="h-5 w-5 text-error-600 mr-3 mt-0.5 flex-shrink-0" />
                 )}
-                <span className={`${
-                  isValid ? 'text-success-700' : 'text-error-700'
-                }`}>
-                  {reason}
-                </span>
+                <span className={`${isValid ? 'text-success-700' : 'text-error-700'}`}>{typeof reason === 'string' ? reason : reason.message}</span>
               </motion.div>
             ))}
           </div>
