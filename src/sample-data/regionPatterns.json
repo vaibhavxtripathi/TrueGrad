@@ -1,0 +1,18 @@
+{
+  "certificateIdRegex": "^(UT|SC|MU|CI|RC|CC)-[0-9]{4}-[0-9]{6}$",
+  "institutions": [
+    { "id": "UT", "name": "University of Technology" },
+    { "id": "SC", "name": "State College" },
+    { "id": "MU", "name": "Metro University" },
+    { "id": "CI", "name": "City Institute" },
+    { "id": "RC", "name": "Regional College" },
+    { "id": "CC", "name": "Community College" }
+  ],
+  "courses": [
+    "B.Tech CS", "B.Sc Physics", "BBA", "MBA", "M.Tech AI", "BA Economics"
+  ],
+  "qrPayloadFormat": "certId|institution|studentName",
+  "hashFormat": "hash_[A-Za-z0-9]+"
+}
+
+
