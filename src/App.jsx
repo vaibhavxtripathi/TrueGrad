@@ -12,9 +12,12 @@ import Employer from './pages/Employer'
 import Admissions from './pages/Admissions'
 import Scholarships from './pages/Scholarships'
 import Government from './pages/Government'
+import BulkVerifier from './pages/BulkVerifier'
+
 
 function App() {
   return (
+
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       
@@ -52,8 +55,23 @@ function App() {
               </motion.div>
             } 
           />
-          
-          {/* Protected Routes */}
+        
+             <Route 
+            path="/bulk-verifier" 
+            element={
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <BulkVerifier />
+              </motion.div>
+            } 
+          />
+
+
+          {/* Admin Route */}
           <Route 
             path="/admin"
             element={
