@@ -38,7 +38,7 @@ const VerifierUpload = () => {
     e.preventDefault()
     e.stopPropagation()
     setDragActive(false)
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFile(e.dataTransfer.files[0])
     }
@@ -74,14 +74,26 @@ const VerifierUpload = () => {
 
   const handleVerify = async () => {
     if (!selectedFile) return
+
+
     setIsVerifying(true)
-    const result = await runVerification({ file: selectedFile, ocr: ocrDetails || mockOCRDetails })
-    setIsVerifying(false)
-    navigate('/verifier/result', { state: { ...result } })
+
+    // Simulate verification process
+    setTimeout(() => {
+      setIsVerifying(false)
+      navigate('/verifier/result', {
+        state: {
+          file: selectedFile,
+          ocrDetails: mockOCRDetails,
+          isValid: Math.random() > 0.3 // 70% chance of being valid
+        }
+      })
+    }, 2000)
+
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-8 mx-auto">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -97,7 +109,7 @@ const VerifierUpload = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
           {/* Upload Section */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -136,7 +148,7 @@ const VerifierUpload = () => {
                 onChange={handleFileInput}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
-              
+
               {selectedFile ? (
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -185,9 +197,10 @@ const VerifierUpload = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={handleVerify}
-              disabled={!(selectedFile || ocrDetails) || isVerifying}
-              className={`w-full mt-6 ${
-                (selectedFile || ocrDetails) && !isVerifying
+              disabled={!selectedFile || isVerifying}
+              className={`w-full mt-6 p-2 rounded-md ${
+                selectedFile && !isVerifying
+
                   ? 'btn-primary'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
@@ -201,75 +214,6 @@ const VerifierUpload = () => {
                 'Verify Certificate'
               )}
             </motion.button>
-          </motion.div>
-
-          {/* OCR Details Preview */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="card"
-          >
-            <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-              <FileText className="h-5 w-5 text-primary-600 mr-2" />
-              OCR Preview
-            </h2>
-
-            <div className="space-y-4">
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h3 className="font-medium text-gray-900 mb-3">Extracted Information</h3>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Student Name:</span>
-                    <span className="font-medium">{(ocrDetails || mockOCRDetails).studentName}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Institution:</span>
-                    <span className="font-medium">{(ocrDetails || mockOCRDetails).institution}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Degree:</span>
-                    <span className="font-medium">{(ocrDetails || mockOCRDetails).degree}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Graduation Date:</span>
-                    <span className="font-medium">{(ocrDetails || mockOCRDetails).graduationDate}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Certificate ID:</span>
-                    <span className="font-mono text-primary-600">{(ocrDetails || mockOCRDetails).certificateId}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">GPA:</span>
-                    <span className="font-medium">{(ocrDetails || mockOCRDetails).gpa}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Honors:</span>
-                    <span className="font-medium text-success-600">{(ocrDetails || mockOCRDetails).honors}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <div className="flex items-start">
-                  <Eye className="h-5 w-5 text-blue-600 mr-2 mt-0.5" />
-                  <div>
-                    <h4 className="font-medium text-blue-900">Verification Process</h4>
-                    <p className="text-sm text-blue-700 mt-1">
-                      Our AI will analyze the certificate for authenticity markers including 
-                      digital signatures, QR codes, and institutional verification.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {showLegacy && (
-                <div className="mt-4">
-                  <h3 className="font-medium text-gray-900 mb-3">Manual Entry (Legacy Certificates)</h3>
-                  <LegacyEntry onSubmit={(form)=>{ setOcrDetails(form); setSelectedFile(null) }} />
-                </div>
-              )}
-            </div>
           </motion.div>
         </div>
       </div>

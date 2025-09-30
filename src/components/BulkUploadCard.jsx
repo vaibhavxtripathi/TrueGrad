@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
+import { Upload, FileText, X, FolderUp } from 'lucide-react';
 
 const BulkUploadCard = ({ onFilesUpload }) => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -29,73 +30,105 @@ const BulkUploadCard = ({ onFilesUpload }) => {
   });
 
   const removeFile = (id) => {
-    setUploadedFiles(prev => prev.filter(file => file.id !== id));
+    const newFiles = uploadedFiles.filter(file => file.id !== id);
+    setUploadedFiles(newFiles);
+    onFilesUpload(newFiles);
   };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-lg border border-gray-100 p-6"
+      className="bg-white rounded-xl shadow-lg border border-gray-200 p-6 flex flex-col h-full"
     >
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Bulk Certificate Upload</h3>
-      
-      {/* Dropzone */}
-      <div
-        {...getRootProps()}
-        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-          isDragActive ? 'border-blue-400 bg-blue-50' : 'border-gray-300 hover:border-blue-400'
-        }`}
-      >
-        <input {...getInputProps()} />
-        <div className="text-gray-600">
-          <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          <p className="mt-2 text-sm font-medium">
-            {isDragActive ? 'Drop files here' : 'Drag & drop certificates here'}
-          </p>
-          <p className="text-xs text-gray-500 mt-1">Supports: JPG, PNG, PDF (Max 10MB each)</p>
-          <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
-            Browse Files
-          </button>
+      <div className="flex items-center space-x-2 mb-4">
+        <div className="bg-gradient-to-r from-green-600 to-green-800 p-1.5 rounded-lg">
+          <FolderUp className="h-4 w-4 text-white" />
         </div>
+        <h3 className="text-lg font-semibold text-gray-900">Bulk Certificate Upload</h3>
       </div>
-
-      {/* Uploaded Files List */}
-      {uploadedFiles.length > 0 && (
-        <div className="mt-6">
-          <h4 className="text-sm font-medium text-gray-900 mb-3">Uploaded Files ({uploadedFiles.length})</h4>
-          <div className="space-y-2 max-h-60 overflow-y-auto">
-            {uploadedFiles.map((file) => (
+      
+      {/* Dropzone - Takes remaining space */}
+      <div className="flex-1 flex flex-col">
+        <div
+          {...getRootProps()}
+          className={`border-2 border-dashed rounded-lg flex-1 flex items-center justify-center cursor-pointer transition-all duration-200 ${
+            isDragActive
+              ? 'border-primary-500 bg-primary-50'
+              : uploadedFiles.length > 0
+              ? 'border-green-500 bg-green-50'
+              : 'border-gray-300 bg-gray-50 hover:border-primary-400'
+          }`}
+        >
+          <input {...getInputProps()} />
+          <div className="text-gray-600 text-center p-4">
+            {uploadedFiles.length > 0 ? (
               <motion.div
-                key={file.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="space-y-2"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded flex items-center justify-center">
-                    <span className="text-blue-600 text-xs font-medium">
-                      {file.name.split('.').pop().toUpperCase()}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{file.name}</p>
-                    <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                  </div>
+                <FileText className="h-12 w-12 text-green-600 mx-auto" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {uploadedFiles.length} file{uploadedFiles.length !== 1 ? 's' : ''} uploaded
+                  </p>
+                  <p className="text-xs text-gray-600">Ready for verification</p>
                 </div>
-                <button
-                  onClick={() => removeFile(file.id)}
-                  className="text-red-600 hover:text-red-800 text-sm font-medium"
-                >
-                  Remove
-                </button>
               </motion.div>
-            ))}
+            ) : (
+              <div className="space-y-3">
+                <Upload className="h-12 w-12 text-gray-400 mx-auto" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {isDragActive ? 'Drop files here' : 'Drag & drop certificates here'}
+                  </p>
+                  <p className="text-xs text-gray-600 mt-1">Supports: JPG, PNG, PDF (Max 10MB each)</p>
+                  <button className="mt-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200">
+                    Browse Files
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-      )}
+
+        {/* Uploaded Files List */}
+        {uploadedFiles.length > 0 && (
+          <div className="mt-4">
+            <h4 className="text-sm font-medium text-gray-900 mb-3">Uploaded Files</h4>
+            <div className="space-y-2 max-h-32 overflow-y-auto">
+              {uploadedFiles.map((file) => (
+                <motion.div
+                  key={file.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-center justify-between p-2 bg-gray-50 rounded-lg border border-gray-200"
+                >
+                  <div className="flex items-center space-x-2">
+                    <div className="w-6 h-6 bg-primary-100 rounded flex items-center justify-center">
+                      <FileText className="h-3 w-3 text-primary-600" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-medium text-gray-900 truncate max-w-[150px]">{file.name}</p>
+                      <p className="text-xs text-gray-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeFile(file.id);
+                    }}
+                    className="text-red-600 hover:text-red-800 p-1 rounded transition-colors"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 };

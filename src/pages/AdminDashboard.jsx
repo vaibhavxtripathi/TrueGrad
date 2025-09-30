@@ -1,16 +1,15 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { 
-  Users, 
+import { HeatMapGrid } from "react-grid-heatmap";
+import {  
   CheckCircle, 
   XCircle, 
   AlertTriangle, 
-  TrendingUp,
   Building2,
   Shield,
   Activity
 } from 'lucide-react'
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import StatsCard from '../components/StatsCard'
 import AlertsTable from '../components/AlertsTable'
 import BlacklistTable from '../components/BlacklistTable'
@@ -121,49 +120,61 @@ const AdminDashboard = () => {
 
         {/* Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          {/* Pie Chart */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="card"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
-              <Shield className="h-5 w-5 text-primary-600 mr-2" />
-              Verification Status
-            </h3>
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="flex justify-center space-x-6 mt-4">
-              {pieData.map((item) => (
-                <div key={item.name} className="flex items-center">
-                  <div 
-                    className="w-3 h-3 rounded-full mr-2" 
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <span className="text-sm text-gray-600">{item.name}: {item.value}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+  {/* Heatmap Chart */}
+  <motion.div
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    transition={{ duration: 0.6, delay: 0.4 }}
+    className="card p-4"
+  >
+    <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center">
+      <Shield className="h-5 w-5 text-primary-600 mr-2" />
+      Forgery Patterns
+    </h3>
+
+    {/* Fix: Give explicit height */}
+    <div className="w-full h-80 overflow-hidden">
+      <HeatMapGrid
+        data={[
+          [0, 2, 3, 1, 4],
+          [1, 3, 2, 0, 5],
+          [2, 1, 0, 4, 3],
+          [3, 4, 1, 2, 0],
+          [4, 0, 5, 3, 2],
+        ]}
+        xLabels={[
+          "Font Mismatch",
+          "Tampered Seal",
+          "Fake Signature",
+          "Altered Date",
+          "Copied Template",
+        ]}
+        yLabels={["Doc 1", "Doc 2", "Doc 3", "Doc 4", "Doc 5"]}
+        cellRender={(x, y, value) => (
+          <div className="text-xs font-medium text-gray-800 mt-5">{value}</div>
+        )}
+        cellStyle={(_x, _y, ratio) => ({
+          background: `rgba(29, 78, 216, ${ratio})`,
+          fontSize: "0.75rem",
+          color: ratio > 0.5 ? "white" : "black",
+        })}
+        xLabelsStyle={() => ({
+          fontSize: "0.75rem",
+          textAlign: "center",
+        })}
+        yLabelsStyle={() => ({
+          fontSize: "0.75rem",
+          textAlign: "right",
+        })}
+        // ✅ important: control cell height
+        yLabelsPos="left"
+        cellHeight="60px"
+      />
+    </div>
+  </motion.div>
+
+
+
 
           {/* Bar Chart */}
           <motion.div
@@ -189,16 +200,14 @@ const AdminDashboard = () => {
                   />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="valid" fill="#22c55e" name="Valid" />
-                  <Bar dataKey="fake" fill="#ef4444" name="Fake" />
+                  <Bar dataKey="valid" fill="#3b82f6" name="Valid" />   
+                  <Bar dataKey="fake" fill="#1e3a8a" name="Fake" />     
+
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </motion.div>
         </div>
-
-        
-
         {/* Tables Row */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           <BlacklistTable />

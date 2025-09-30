@@ -9,13 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "framer-motion": "^10.16.16",
+    "framer-motion": "^10.18.0",
     "lucide-react": "^0.294.0",
+    "qr-code-styling": "^1.9.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.8",
-    "react-router-dom": "^6.20.1",
-    "recharts": "^2.8.0",
+    "react-grid-heatmap": "^1.3.0",
+    "react-qr-code": "^2.0.18",
+    "react-router-dom": "^6.30.1",
+    "react-to-print": "^3.1.1",
+    "recharts": "^2.15.4",
     "tesseract.js": "^6.0.1"
   },
   "devDependencies": {

@@ -82,9 +82,9 @@ const VerifierResult = () => {
               }`}
             >
               {isValid ? (
-                <CheckCircle className="h-10 w-10 text-success-600" />
+                <CheckCircle className="h-20 w-20 text-green-600" />
               ) : (
-                <XCircle className="h-10 w-10 text-error-600" />
+                <XCircle className="h-20 w-20 text-red-600" />
               )}
             </motion.div>
 
@@ -106,7 +106,7 @@ const VerifierResult = () => {
             <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium ${
               isValid 
                 ? 'bg-success-100 text-success-800' 
-                : 'bg-error-100 text-error-800'
+                : 'bg-red-100 text-error-800'
             }`}>
               <Shield className="h-4 w-4 mr-2" />
               Confidence Score: {verificationDetails.overallScore}%
@@ -172,12 +172,12 @@ const VerifierResult = () => {
                     </span>
                     <div className="flex items-center">
                       {isPassed ? (
-                        <CheckCircle className="h-4 w-4 text-success-600 mr-2" />
+                        <CheckCircle className="h-4 w-4 text-green-600 mr-2" />
                       ) : (
-                        <XCircle className="h-4 w-4 text-error-600 mr-2" />
+                        <XCircle className="h-4 w-4 text-red-600 mr-2" />
                       )}
                       <span className={`font-medium ${
-                        isPassed ? 'text-success-600' : 'text-error-600'
+                        isPassed ? 'text-green-600' : 'text-red-600'
                       }`}>
                         {value}
                       </span>
@@ -211,13 +211,13 @@ const VerifierResult = () => {
                 className={`flex items-start p-3 rounded-lg ${
                   isValid 
                     ? 'bg-success-50 border border-success-200' 
-                    : 'bg-error-50 border border-error-200'
+                    : 'bg-red-50 border border-red-200'
                 }`}
               >
                 {isValid ? (
                   <CheckCircle className="h-5 w-5 text-success-600 mr-3 mt-0.5 flex-shrink-0" />
                 ) : (
-                  <XCircle className="h-5 w-5 text-error-600 mr-3 mt-0.5 flex-shrink-0" />
+                  <XCircle className="h-5 w-5 text-red-600 mr-3 mt-0.5 flex-shrink-0" />
                 )}
                 <span className={`${isValid ? 'text-success-700' : 'text-error-700'}`}>{typeof reason === 'string' ? reason : reason.message}</span>
               </motion.div>

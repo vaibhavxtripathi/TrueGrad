@@ -29,7 +29,7 @@ const StatsCard = ({
           <p className="text-2xl font-bold text-gray-900">{value}</p>
           {trend && (
             <p className={`text-sm mt-1 ${
-              trend > 0 ? 'text-success-600' : 'text-error-600'
+              trend > 0 ? 'text-green-600' : 'text-red-600'
             }`}>
               {trend > 0 ? '+' : ''}{trend}% from last month
             </p>
